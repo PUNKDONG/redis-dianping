@@ -57,9 +57,9 @@ public class ShopController {
      */
     @PutMapping
     public Result updateShop(@RequestBody Shop shop) {
-        // 写入数据库
-        shopService.updateById(shop);
-        return Result.ok();
+        // 这里是对数据修改时，我们先修改数据库，然后删除缓存
+
+        return shopService.updateWithDeleteCache(shop);
     }
 
     /**
