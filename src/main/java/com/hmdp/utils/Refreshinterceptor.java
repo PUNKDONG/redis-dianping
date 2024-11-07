@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class Refreshnterceptor implements HandlerInterceptor {
+public class Refreshinterceptor implements HandlerInterceptor {
     private StringRedisTemplate redisTemplate;
-    public Refreshnterceptor(StringRedisTemplate redisTemplate) {
+    public Refreshinterceptor(StringRedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
     @Override
