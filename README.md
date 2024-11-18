@@ -1,3 +1,15 @@
+## 自定义测试脚本：批量生成用户 Token
+
+为了支持 JMeter 的多用户并发登录压力测试，我们提供了一个脚本，用于向 Redis 中批量写入 1000 个用户的 token，并将这些 token 输出到文件供 JMeter 使用。
+在测试单元中src/test/java/com/hmdp/HmDianPingApplicationTests.java中
+
+### 脚本功能
+该脚本会执行以下操作：
+1. 从数据库中获取用户列表。
+2. 为每个用户生成唯一的 token。
+3. 将用户数据以 token 为键存储到 Redis。
+4. 将所有 token 保存到 `tokens.txt` 文件中。
+
 # 点评后端
 
 redis-点评是一个基于 Spring Boot 的点评系统后端，旨在为用户提供便捷的商家查询、点评和互动服务。通过该平台，用户可以浏览商家信息、查看点评内容，并发布自己的评论，为其他用户提供参考。
