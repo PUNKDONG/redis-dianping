@@ -81,9 +81,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         );
         //session.setAttribute("user",userDTO);
         String token = UUID.randomUUID().toString().replace("-", "");
-        stringRedisTemplate.opsForHash().putAll("login:token"+token,usermap );
-        stringRedisTemplate.expire("login:token"+token,30, TimeUnit.MINUTES);
-        //4.存在则保存到session
+        stringRedisTemplate.opsForHash().putAll("login:token:"+token,usermap );
+        stringRedisTemplate.expire("login:token:"+token,30, TimeUnit.MINUTES);
+
         return Result.ok(token);
     }
 

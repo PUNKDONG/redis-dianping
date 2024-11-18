@@ -10,10 +10,17 @@ import com.hmdp.service.IUserInfoService;
 import com.hmdp.service.IUserService;
 import com.hmdp.utils.UserHolder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.BitFieldSubCommands;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * <p>
@@ -33,6 +40,8 @@ public class UserController {
 
     @Resource
     private IUserInfoService userInfoService;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     /**
      * 发送手机验证码
@@ -69,7 +78,14 @@ public class UserController {
     public Result me(){
         // TODO 获取当前登录的用户并返回
         UserDTO user = UserHolder.getUser();
+        if(user == null){
+            return Result.ok(user);
 
+        }
+        Long userId = user.getId();
+        User userALL = userService.getById(userId);
+
+        BeanUtils.copyProperties(userALL,user);
         return Result.ok(user);
     }
 
@@ -85,5 +101,54 @@ public class UserController {
         info.setUpdateTime(null);
         // 返回
         return Result.ok(info);
+    }
+
+    @GetMapping("/{id}")
+    public Result queryById(@PathVariable("id") Long userId){
+        User user = userService.getById(userId);
+        if (user == null) {
+            return Result.ok();
+        }
+        UserDTO userDTO = new UserDTO();
+        BeanUtils.copyProperties(user,userDTO);
+        return Result.ok(userDTO);
+
+    }
+    @PostMapping("/sign")
+    public Result sendSign( ){
+        LocalDateTime now = LocalDateTime.now();
+        String yyyyMM = now.format(DateTimeFormatter.ofPattern("yyyyMM"));
+        Long id = UserHolder.getUser().getId();
+        String key ="sign"+ id.toString() + ":" + yyyyMM;
+        int day = now.getDayOfMonth();
+        stringRedisTemplate.opsForValue().setBit(key,day-1,true);
+
+        return Result.ok();
+    }
+    @PostMapping("/signcount")
+    public Result  Signcount( ){
+        LocalDateTime now = LocalDateTime.now();
+        String yyyyMM = now.format(DateTimeFormatter.ofPattern("yyyyMM"));
+        Long id = UserHolder.getUser().getId();
+        String key ="sign"+ id.toString() + ":" + yyyyMM;
+        int day = now.getDayOfMonth();
+        List<Long> result = stringRedisTemplate.opsForValue().bitField(
+                key, BitFieldSubCommands.create()
+                        .get(BitFieldSubCommands.BitFieldType.unsigned(day)).valueAt(0)
+        );
+        Long allday = result.get(0);
+        int lianxushijian = 0;
+        while(true){
+            if((allday&1)==0){
+                break;
+            }
+            else {
+                lianxushijian++;
+
+            }
+            allday=allday>>1;
+        }
+
+        return Result.ok(lianxushijian);
     }
 }

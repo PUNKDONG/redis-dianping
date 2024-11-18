@@ -24,7 +24,7 @@ public class Refreshinterceptor implements HandlerInterceptor {
             return true;
         }
         //没有就退出
-        Map<Object, Object> usermap = redisTemplate.opsForHash().entries("login:token" + token);
+        Map<Object, Object> usermap = redisTemplate.opsForHash().entries("login:token:" + token);
         //有就刷新
         if(usermap.isEmpty()){
             return true;
@@ -32,7 +32,9 @@ public class Refreshinterceptor implements HandlerInterceptor {
         UserDTO userDTO = BeanUtil.fillBeanWithMap(usermap, new UserDTO(), false);
         //TODO 获取的是map数据，map转换为user数据
         UserHolder.saveUser(userDTO);
-        redisTemplate.expire("login:token" + token,30, TimeUnit.MINUTES);
+//        redisTemplate.expire("login:token" + token,3000, TimeUnit.HOURS);
+        redisTemplate.persist("login:token:" + token);
+
         //保存到threadlocal线程里面
         return true;
 
