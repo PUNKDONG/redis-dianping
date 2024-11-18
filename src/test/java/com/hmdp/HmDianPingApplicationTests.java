@@ -22,7 +22,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+/*
+为了支持 JMeter 的多用户并发登录压力测试，我们提供了一个脚本，用于向 Redis 中批量写入 1000 个用户的 token，并将这些 token 输出到文件供 JMeter 使用。 在测试单元中src/test/java/com/hmdp/HmDianPingApplicationTests.java中
 
+脚本功能
+该脚本会执行以下操作：
+
+从数据库中获取用户列表。
+为每个用户生成唯一的 token。
+将用户数据以 token 为键存储到 Redis。
+将所有 token 保存到 tokens.txt 文件中。
+ */
 @SpringBootTest
 class HmDianPingApplicationTests {
     @Resource
