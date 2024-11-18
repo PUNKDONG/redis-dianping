@@ -74,7 +74,22 @@ class HmDianPingApplicationTests {
 
         System.out.println("Token generation complete. Tokens saved to tokens.txt for JMeter testing.");
     }
+    @Test
+    public void UVcount(){
+        String[] users = new String[1000];
+        for (int i = 0; i < 10000; i++) {
+            String s = "user" + i;
+            int j=i%1000;
+            users[j] = s;
+            if(j==999){
+                stringRedisTemplate.opsForHyperLogLog().add("testUV",users);
+            }
+        }
+        Long testUV = stringRedisTemplate.opsForHyperLogLog().size("testUV");
+        System.out.println(testUV);
 
+
+    }
 }
 
 
