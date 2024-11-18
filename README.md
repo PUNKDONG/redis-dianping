@@ -40,5 +40,5 @@ redis-点评是一个基于 Spring Boot 的点评系统后端，旨在为用户�
 
 1. 克隆项目代码：
    ```bash
-   git clone  
+   git clone  https://github.com/PUNKDONG/redis-dianping.git
    cd heima-review
