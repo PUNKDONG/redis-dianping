@@ -63,7 +63,7 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
     private static final ExecutorService SECKILL_POLL=Executors.newSingleThreadExecutor();
     @PostConstruct
     public void init(){
-        SECKILL_POLL.submit(new VoucherOrderHandelTask());
+        //SECKILL_POLL.submit(new VoucherOrderHandelTask());
     }
     private class VoucherOrderHandelTask implements Runnable{
         @Override
