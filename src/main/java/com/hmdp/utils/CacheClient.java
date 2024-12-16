@@ -74,6 +74,7 @@ public void  SetObjectToJsonWithExpiretime  (Object obj, String Key , Long expir
     public<R,ID> R queryByidWithLogicTimeOut(ID id,Class<R> type,Function<ID,R> dbSelect,String keypre,Long RefreshTTL, TimeUnit timeUnit)   {
         LocalDateTime now = LocalDateTime.now();
         String cacheShop = stringRedisTemplate.opsForValue().get(keypre + id);
+        //这里是针对热点key
         if(StrUtil.isBlank(cacheShop)){
             return null;
         }
@@ -90,7 +91,7 @@ public void  SetObjectToJsonWithExpiretime  (Object obj, String Key , Long expir
             //获取独立线程，重建
             CACHE_REBUILD_POLL.submit(()->{
                 try {
-
+                    //过期了就重新开一个线程对对象进行重建
                     R obj = dbSelect.apply(id);
                     this.SetObjectToJsonWithExpiretime(obj , keypre+id, RefreshTTL, timeUnit );
                 } catch (Exception e) {
