@@ -8,7 +8,7 @@ spring:
     name: hmdp
   datasource:
       driver-class-name: ${sky.datasource.driver-class-name}
-      url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}
       username: ${sky.datasource.username}
       password: ${sky.datasource.password}
 
@@ -16,13 +16,20 @@ spring:
     #host: 10.67.11.194
     host: ${sky.redis.host}
     port: ${sky.redis.port}
-    database: ${sky.redis.database}
+    #database: ${sky.redis.database}
+   # password: ${sky.redis.password}
     lettuce:
       pool:
         max-active: 10
         max-idle: 10
         min-idle: 1
         time-between-eviction-runs: 10s
+  rabbitmq:
+      host: ${sky.rabbitmq.host}
+      port: ${sky.rabbitmq.port}
+      virtual-host: ${sky.rabbitmq.virtual-host}
+      username: ${sky.rabbitmq.username}
+      password: ${sky.rabbitmq.password}
 
   jackson:
     default-property-inclusion: non_null # JSON处理时忽略非空字段

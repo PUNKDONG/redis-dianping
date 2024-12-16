@@ -1,12 +1,19 @@
 sky:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    host: 127.0.0.1
+    driver-class-name: com.mysql.jdbc.Driver
+    host: 121.0.0.1
     port: 3306
-    database: hmdp_dev
-    username: dev_user
-    password: dev_password
+    database: hmdp
+    username: root
+    password: zy43728161606
   redis:
-    host: 127.0.0.1
+    host: 59.110.215.216
     port: 6379
     database: 0
+    password: 123
+  rabbitmq:
+    host: 59.110.215.216 # 主机名
+    port: 5672            # 端口
+    virtual-host: /dianping  # 虚拟主机
+    username: dianping      # 用户名
+    password: 123
