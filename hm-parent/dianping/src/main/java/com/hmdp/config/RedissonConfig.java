@@ -17,13 +17,13 @@ public class RedissonConfig {
     private int redisPort;
 
 
-//
-//    @Bean
-//    public RedissonClient redissonClient() {
-//        Config config = new Config();
-//        config.useSingleServer()
-//                .setAddress("redis://" + redisHost + ":" + redisPort);
-//
-//        return Redisson.create(config);
-//    }
+
+    @Bean
+    public RedissonClient redissonClient() {
+        Config config = new Config();
+        config.useSingleServer()
+                .setAddress("redis://" + redisHost + ":" + redisPort);
+
+        return Redisson.create(config);
+    }
 }

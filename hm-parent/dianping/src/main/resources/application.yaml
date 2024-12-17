@@ -24,6 +24,7 @@ spring:
         max-idle: 10
         min-idle: 1
         time-between-eviction-runs: 10s
+    timeout: 10000ms
   rabbitmq:
       host: ${sky.rabbitmq.host}
       port: ${sky.rabbitmq.port}

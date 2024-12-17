@@ -6,7 +6,7 @@
         <groupId>com.hmdp</groupId>
         <artifactId>hm-dianping</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath> ../hm-parent/pom.xml</relativePath>
+        <relativePath> ../pom.xml</relativePath>
     </parent>
 
 
@@ -20,6 +20,23 @@
 
     </dependencies>
 
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 
 
