@@ -1,8 +1,10 @@
+import com.hmdp.HmDianPingApplication;
 import com.hmdp.dto.UserDTO;
 import com.hmdp.entity.User;
 import com.hmdp.service.impl.ShopServiceImpl;
 
 import com.hmdp.service.impl.UserServiceImpl;
+import com.hmdp.utils.RedisConstants;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.BeanUtils;
@@ -28,7 +30,7 @@ import java.util.*;
 将用户数据以 token 为键存储到 Redis。
 将所有 token 保存到 tokens.txt 文件中。
  */
-@SpringBootTest
+@SpringBootTest(classes = HmDianPingApplication.class)
 class HmDianPingApplicationTests {
     @Resource
     private  ShopServiceImpl shopService;
@@ -54,7 +56,7 @@ class HmDianPingApplicationTests {
                 userMap.put("icon", userDTO.getIcon());
                 userMap.put("id", userDTO.getId().toString());
 
-                String redisKey = "login:token:" + token;
+                String redisKey = RedisConstants.LOGIN_USER_KEY + token;
                 HashOperations<String, Object, Object> opsForHash = stringRedisTemplate.opsForHash();
                 opsForHash.putAll(redisKey, userMap);
                 stringRedisTemplate.persist(redisKey);

@@ -36,6 +36,12 @@ public class ShopController {
        return shopService.queryByid(id);
        // return Result.ok(shopService.getById(id));
     }
+    @PutMapping("PreHot")
+    public Result PreHot( ) {
+        return shopService.PreHot( );
+        // return Result.ok(shopService.getById(id));
+
+    }
 
     /**
      * 新增商铺信息

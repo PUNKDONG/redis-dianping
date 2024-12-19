@@ -89,6 +89,7 @@ public void  SetObjectToJsonWithExpiretime  (Object obj, String Key , Long expir
                 try {
                     //过期了就重新开一个线程对对象进行重建
                     R obj = dbSelect.apply(id);
+
                     this.SetObjectToJsonWithExpiretime(obj , keypre+id, RefreshTTL, timeUnit );
                 } catch (Exception e) {
                     throw new RuntimeException(e);

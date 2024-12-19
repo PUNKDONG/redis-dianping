@@ -1,11 +1,11 @@
 sky:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    host: 121.0.0.1
+    host: 59.110.215.216
     port: 3306
     database: hmdp
     username: root
-    password: zy43728161606
+    password: 123
   redis:
     host: 59.110.215.216
     port: 6379

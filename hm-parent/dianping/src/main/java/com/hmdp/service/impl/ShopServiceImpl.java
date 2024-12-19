@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -39,7 +40,11 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
     @Override
     public Result queryByid(Long id) {
         //首先在redis里面查询缓存
-         Shop shop = cacheClient.queryByidWithLogicTimeOut(id,Shop.class,this::getById,RedisConstants.CACHE_SHOP_KEY,10L,TimeUnit.SECONDS);
+         Shop shop = cacheClient
+                 .queryByidWithLogicTimeOut(id
+                         ,Shop.class
+                         ,this::getById
+                         ,RedisConstants.CACHE_SHOP_KEY,10L,TimeUnit.SECONDS);
 //
         if (shop == null) {
             return  Result.fail("店铺不存在");
@@ -112,5 +117,19 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
         stringRedisTemplate.delete("cache:shop" + shop.getId());
         return Result.ok("成功删除");
     }
+
+    @Override
+    public Result PreHot( ) {
+        //先用mybatisplus查询所有的shop
+        //然后通过shop的id,以及shop对象本身调用下面的函数
+        List<Shop> shops = this.list();
+        for (Shop shop : shops) {
+            String shopKey = RedisConstants.CACHE_SHOP_KEY + shop.getId(); // 使用 Shop ID 作为缓存 key
+            // 调用 CacheClient 将 Shop 对象序列化为 JSON 并存储到 Redis
+            cacheClient.SetObjectToJsonWithExpiretime(shop, shopKey, 30L, TimeUnit.MINUTES);
+        }
+          return Result.ok("加载成功");
+    }
+
 
 }

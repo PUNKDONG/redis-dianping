@@ -49,7 +49,9 @@ public class VoucherServiceImpl extends ServiceImpl<VoucherMapper, Voucher> impl
         seckillVoucher.setBeginTime(voucher.getBeginTime());
         seckillVoucher.setEndTime(voucher.getEndTime());
         seckillVoucherService.save(seckillVoucher);
-        stringRedisTemplate.opsForValue().set("Voucher:stock:"+voucher.getId(),voucher.getStock().toString());
+        stringRedisTemplate.opsForValue()
+                .set("seckill:stock"+voucher.getId(),voucher.getStock().toString());
+
 
     }
 }

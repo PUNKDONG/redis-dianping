@@ -17,4 +17,7 @@ public interface IShopService extends IService<Shop> {
     Result queryByid(Long id);
 
     Result updateWithDeleteCache(Shop shop);
+
+    Result PreHot( );
+
 }

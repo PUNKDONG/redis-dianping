@@ -8,7 +8,7 @@ spring:
     name: hmdp
   datasource:
       driver-class-name: ${sky.datasource.driver-class-name}
-      url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}
+      url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?useSSL=false
       username: ${sky.datasource.username}
       password: ${sky.datasource.password}
 
