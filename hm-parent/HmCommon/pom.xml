@@ -10,6 +10,14 @@
 
     <artifactId>HmCommon</artifactId>
     <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.17.4</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
     <version>0.0.1-SNAPSHOT</version>
     <name>HmCommon</name>
 
