@@ -85,6 +85,7 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
         voucherOrder.setId(orderID);
 
         SendOrderToMQ(voucherOrder);
+        CompletableFuture.runAsync(() -> SendOrderToMQ(voucherOrder), executorService);
 
         return Result.ok(orderID);
     }
@@ -96,5 +97,7 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
 
     }
     //private BlockingQueue<VoucherOrder> oderTaskQueue=new ArrayBlockingQueue<VoucherOrder>(1024*1024);
+    // 扩展线程池，避免线程池阻塞
+    private ExecutorService executorService = Executors.newFixedThreadPool(10); // 线程池数量根据实际情况调整
 
 }
