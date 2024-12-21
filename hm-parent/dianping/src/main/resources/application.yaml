@@ -31,6 +31,11 @@ spring:
       virtual-host: ${sky.rabbitmq.virtual-host}
       username: ${sky.rabbitmq.username}
       password: ${sky.rabbitmq.password}
+aliyun_oss:
+  endpoint:  ${sky.aliyun_oss.endpoint}
+  accessKeyId:   ${sky.aliyun_oss.accessKeyId}
+  accessKeySecret:   ${sky.aliyun_oss.accessKeySecret}
+  bucketName:   ${sky.aliyun_oss.bucketName}
 
   jackson:
     default-property-inclusion: non_null # JSON处理时忽略非空字段
